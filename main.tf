@@ -1,5 +1,12 @@
 resource "aws_opensearch_domain" "domain" {
   domain_name    = var.project_name
+  node_to_node_encryption {
+    enabled = true
+  }
+
+  encrypt_at_rest {
+    enabled = true
+  }
   engine_version = "OpenSearch_1.2"
 
   cluster_config {
@@ -38,6 +45,7 @@ resource "aws_opensearch_domain" "domain" {
 
   auto_tune_options {
     desired_state = "ENABLED"
+    rollback_on_disable = "NO_ROLLBACK"
   }
 
   dynamic "vpc_options" {
@@ -50,7 +58,7 @@ resource "aws_opensearch_domain" "domain" {
   }
 
   depends_on = [
-    aws_iam_service_linked_role.service_role
+    data.aws_iam_role.service_linked_role
   ]
 
   tags = local.tags

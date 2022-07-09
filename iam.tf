@@ -1,3 +1,3 @@
-resource "aws_iam_service_linked_role" "service_role" {
-  aws_service_name = "opensearchservice.amazonaws.com"
+data "aws_iam_role" "service_linked_role" {
+  name = "AWSServiceRoleForAmazonOpenSearchService"
 }

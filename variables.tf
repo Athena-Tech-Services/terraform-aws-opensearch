@@ -48,10 +48,6 @@ variable "domain_connection_type" {
   type        = string
   description = "This controls whether or not the domain should be public or vpc access"
   default     = null
-  validation {
-    condition     = var.domain_connection_type == "public" || var.domain_connection_type == "vpc"
-    error_message = "The domain_connection_type can only be public or vpc!"
-  }
 }
 
 variable "domain_subnets" {

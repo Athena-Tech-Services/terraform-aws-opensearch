@@ -9,5 +9,5 @@ data "aws_vpc" "default_vpc" {
 }
 
 locals {
-  vpc = var.vpc_id != "" ? data.aws_vpc.supplied_vpc : data.aws_vpc.default_vpc
+  vpc = var.vpc_id != "" ? data.aws_vpc.supplied_vpc[0] : data.aws_vpc.default_vpc[0]
 }
