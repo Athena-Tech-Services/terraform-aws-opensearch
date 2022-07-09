@@ -14,13 +14,6 @@ variable "environment" {
   default     = "dev"
   description = "The environment value for the environment tag"
 }
-
-variable "connection_type" {
-  type        = string
-  default     = "public"
-  description = "The connection type for the tag"
-}
-
 variable "security_group_id" {
   type        = string
   description = "The security group for the domain"
@@ -54,7 +47,7 @@ variable "account_id" {
 variable "domain_connection_type" {
   type        = string
   description = "This controls whether or not the domain should be public or vpc access"
-  default     = "public"
+  default     = null
   validation {
     condition     = var.domain_connection_type == "public" || var.domain_connection_type == "vpc"
     error_message = "The domain_connection_type can only be public or vpc!"
@@ -121,12 +114,12 @@ variable "custom_endpoint_enabled" {
   description = "Control whether or not the custom endpoint is enabled"
 }
 
-variable "volume_size" {
+variable "ebs_volume_size" {
   type        = number
   description = "size of the EBS"
   default     = 10
   validation {
-    condition     = var.volume_size >= 10
+    condition     = var.ebs_volume_size >= 10
     error_message = "It should be at least 10 GiB"
   }
 }

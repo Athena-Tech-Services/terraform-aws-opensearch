@@ -40,10 +40,13 @@ resource "aws_opensearch_domain" "domain" {
     desired_state = "ENABLED"
   }
 
-  vpc_options {
-    count              = var.domain_connection_type == "vpc" ? 1 : 0
-    security_group_ids = [local.sg]
-    subnet_ids         = [local.subnets]
+  dynamic "vpc_options" {
+    for_each              = var.domain_connection_type[*]
+    content{
+      security_group_ids = [local.sg]
+      subnet_ids         = [local.subnets]
+    }
+    
   }
 
   tags = local.tags
