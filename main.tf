@@ -49,5 +49,9 @@ resource "aws_opensearch_domain" "domain" {
     
   }
 
+  depends_on = [
+    aws_iam_service_linked_role.service_role
+  ]
+
   tags = local.tags
 }
