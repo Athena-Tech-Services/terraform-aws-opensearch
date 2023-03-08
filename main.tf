@@ -1,5 +1,5 @@
 resource "aws_opensearch_domain" "domain" {
-  domain_name    = var.project_name
+  domain_name = var.project_name
   node_to_node_encryption {
     enabled = true
   }
@@ -44,21 +44,21 @@ resource "aws_opensearch_domain" "domain" {
   }
 
   auto_tune_options {
-    desired_state = "ENABLED"
+    desired_state       = "ENABLED"
     rollback_on_disable = "NO_ROLLBACK"
   }
 
   dynamic "vpc_options" {
-    for_each              = var.domain_connection_type[*]
-    content{
+    for_each = var.domain_connection_type[*]
+    content {
       security_group_ids = [local.sg]
-      subnet_ids         = [local.subnets]
+      subnet_ids         = local.subnets
     }
-    
+
   }
 
   depends_on = [
-    data.aws_iam_role.service_linked_role
+    aws_iam_role.service_linked_role
   ]
 
   tags = local.tags
